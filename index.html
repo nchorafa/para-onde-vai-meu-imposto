@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Onde Vai?</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#204558;--lime:#CBFFA6;--blue:#A8E0F2;--gray:#D9D9D9;--bar:#F5F5F7;--ink:#000;--field:#ececec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);font-family:Montserrat,system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center}
+#app{width:100%;max-width:430px;height:100%;display:flex;flex-direction:column;background:var(--bg);position:relative}
+button{font:inherit;cursor:pointer;border:0}
+input{font:inherit}
+header{background:var(--bar);display:flex;align-items:center;gap:14px;padding:14px 22px;flex:none}
+.av{width:44px;height:44px;border-radius:50%;background:#bbb;display:grid;place-items:center;font-weight:800;font-size:22px}
+header b{display:block;font-size:15px}header small{font-size:12px;color:#555}
+header .sair{margin-left:auto;background:none;font-size:12px;font-weight:600;text-decoration:underline}
+main{flex:1;overflow-y:auto;padding:22px 22px 24px}
+nav{flex:none;background:var(--bar);display:flex;justify-content:space-around;padding:10px 0 12px}
+nav button{background:none;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:500;opacity:.55;color:#000;padding:4px 10px}
+nav button.on{opacity:1;font-weight:700}
+nav svg{width:30px;height:30px}
+.card{border-radius:26px;padding:20px;margin-bottom:18px}
+.lime{background:var(--lime)}.blue{background:var(--blue)}.gray{background:var(--gray)}
+h2{margin:0 0 12px;font-size:16px;font-weight:700}
+h3{color:#fff;font-size:17px;margin:26px 0 12px;font-weight:700}
+p{margin:0}
+/* login */
+#login{position:absolute;inset:0;background:var(--bg);display:flex;flex-direction:column;z-index:5;overflow-y:auto}
+.hero{background:var(--lime);border-radius:0 0 50% 50%/0 0 22% 22%;padding:60px 20px 70px;text-align:center}
+.logo{font-size:54px;line-height:1;font-weight:500;text-align:center;margin-bottom:26px}
+.eyes{display:flex;justify-content:center;position:relative;height:96px}
+.eye{width:92px;height:92px;border-radius:50%;background:#fff;border:5px solid #000;position:relative;margin:0 -6px}
+.eye i{position:absolute;width:30px;height:30px;border-radius:50%;background:#000;top:30px;left:34px;transition:transform .08s}
+.lf{padding:34px 40px 20px;display:flex;flex-direction:column;flex:1}
+.lf label{color:#fff;font-weight:700;font-size:18px;margin:0 0 8px 6px}
+.lf input{border-radius:30px;border:0;background:var(--gray);padding:15px 22px;font-size:15px;margin-bottom:18px;width:100%}
+.btn{background:var(--lime);color:var(--bg);font-weight:700;font-size:20px;border-radius:30px;padding:12px;width:100%}
+.err{color:#ffb4a8;font-size:13px;min-height:18px;margin:-8px 0 8px 6px}
+.dir{color:#fff;text-align:center;font-size:13px;margin-top:auto;padding-top:26px}
+/* home */
+.hello{display:flex;align-items:center;gap:14px;font-weight:700;font-size:15px;padding:14px 18px}
+.hello .c{width:46px;height:46px;border-radius:50%;background:var(--bg);color:var(--lime);display:grid;place-items:center;font-weight:800;font-size:20px;flex:none}
+.hello small{display:block;font-weight:500;font-size:12px}
+.scan{text-align:center}
+.scan h2{font-size:15px}
+.qr{width:200px;height:200px;margin:8px auto 0;background:#adadad;border-radius:30px;display:grid;place-items:center;overflow:hidden;position:relative}
+.qr svg{width:150px;height:150px}.qr video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.cam{background:none;margin:-4px 0 6px auto;display:block;padding:6px;transition:transform .1s}
+.cam svg{width:42px;height:34px}.cam.live{background:var(--lime);border-radius:12px}
+.row{display:flex;gap:12px}
+.row input{flex:1;min-width:0;border:0;background:var(--field);border-radius:12px;padding:12px;font-size:13px}
+.row button{background:var(--lime);font-weight:700;border-radius:12px;padding:0 16px;font-size:14px}
+.hint{font-size:12px;margin-top:10px;color:#333;min-height:16px}
+.hint a{font-weight:700;color:var(--bg);cursor:pointer;text-decoration:underline}
+.nota{display:flex;align-items:center;gap:14px;background:var(--lime);border-radius:26px;padding:16px 18px;margin-bottom:12px;width:100%;text-align:left}
+.nota svg{width:42px;height:42px;flex:none}
+.nota .t{flex:1;min-width:0}.nota b{display:block;font-size:14px;line-height:1.2}.nota span{font-size:13px}
+.nota .v{text-align:right}.nota .v b{font-size:14px;font-weight:500}
+.tag{display:inline-block;background:var(--blue);border:1.5px solid var(--bg);border-radius:6px;font-weight:700;font-size:12px;padding:1px 8px;color:var(--bg);margin-top:3px}
+.empty{color:#fff;opacity:.8;font-size:14px}
+/* nota */
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.top b{font-size:16px;line-height:1.2}.top .r{text-align:right;font-size:13px}.top .r b{font-size:18px}
+.split{display:flex;border:2px solid #000;border-radius:30px;overflow:hidden;height:40px;font-weight:700;font-size:17px;margin:6px 0 16px}
+.split div{display:grid;place-items:center;transition:width .6s}
+.split .a{background:var(--lime);border-right:2px solid #000}.split .b{background:var(--blue)}
+.two{display:flex;gap:10px}
+.mini{flex:1;background:#fff;border-radius:12px;padding:8px 6px;text-align:center;font-size:12px;border:1.5px solid var(--lime)}
+.mini.b{border-color:var(--blue)}.mini b{display:block;font-size:17px;margin-top:2px}
+.tr{background:var(--bg);border:2px solid #000;border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;color:#fff;margin-bottom:12px}
+.tr strong{font-size:18px;font-weight:600}.tr .pill{background:#fff;color:#000;border-radius:12px;padding:3px 12px;font-size:13px;border:2px solid #1a3bd6}
+.tr .pill.f{border-color:#3cc83c}.tr .m{margin-left:auto;text-align:right;font-weight:700;font-size:14px}.tr .m small{display:block;font-weight:400;font-size:12px}
+.go{background:var(--blue);border-radius:26px;padding:20px;font-weight:700;font-size:15px;display:flex;justify-content:space-between;width:100%;text-align:left;gap:8px;color:#000}
+/* destino */
+.dest{background:var(--bg);border-radius:18px;padding:16px 20px;color:#fff;margin-bottom:12px}
+.dest .h{display:flex;justify-content:space-between;align-items:center;gap:8px}.dest strong{font-size:17px}
+.dest .pill{background:#fff;color:#000;border:2px solid #7ed321;border-radius:14px;padding:2px 12px;font-size:12px;white-space:nowrap}
+.dest p{font-size:14px;line-height:1.35;margin-top:8px;font-weight:400}
+.kb{height:7px;border-radius:5px;background:rgba(255,255,255,.15);margin-top:10px;overflow:hidden}.kb i{display:block;height:100%;background:var(--lime);transition:width .7s}
+/* aprenda */
+.big p{font-size:15px;line-height:1.35;margin-top:10px}.big h2{font-size:19px}
+.faq{background:#fff;border-radius:18px;margin-bottom:14px;overflow:hidden}
+.faq button{width:100%;background:none;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;font-weight:700;font-size:14px;padding:18px 20px}
+.faq svg{width:24px;height:24px;flex:none;transition:transform .2s}.faq.open svg{transform:rotate(180deg)}
+.faq .ans{display:none;padding:0 20px 18px;font-size:13px;line-height:1.5}.faq.open .ans{display:block}
+.toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);background:#000;color:#fff;font-size:13px;padding:10px 16px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center}
+.toast.on{opacity:.92}
+@media (prefers-color-scheme:dark){:root{--bar:#e9e9ee}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="login">
+    <div class="hero"><div class="logo">Para<br>Onde<br>Vai?</div><div class="eyes" id="eyes"><div class="eye"><i></i></div><div class="eye"><i></i></div></div></div>
+    <div class="lf">
+      <label for="lg">Login</label><input id="lg" autocomplete="username">
+      <label for="sn">Senha</label><input id="sn" type="password" autocomplete="current-password">
+      <div class="err" id="err"></div>
+      <button class="btn" id="entrar">Entrar</button>
+      <div class="dir">Todos os direitos reservados</div>
+    </div>
+  </div>
+  <header><div class="av">$</div><div><b id="hn">Visitante</b><small>Consumo consciente</small></div><button class="sair" id="sair">Sair</button></header>
+  <main id="main"></main>
+  <nav id="nav"></nav>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={user:null,notas:[],sel:null,tab:'scan',faq:-1,stream:null,hint:''};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+S.user=store.get('pov_user',null);S.notas=store.get('pov_notas',[]);
+const ICON={
+scan:'<svg viewBox="0 0 32 32"><g fill="none" stroke="#000" stroke-width="3"><rect x="3" y="3" width="10" height="10"/><rect x="3" y="19" width="10" height="10"/><rect x="19" y="3" width="10" height="10"/></g><g fill="#000"><rect x="19" y="19" width="4" height="4"/><rect x="25" y="19" width="4" height="4"/><rect x="19" y="25" width="4" height="4"/><rect x="25" y="25" width="4" height="4"/></g></svg>',
+nota:'<svg viewBox="0 0 32 32"><path d="M6 2h20v28l-2-2-2 2-2-2-2 2-2-2-2 2-2-2-2 2-2-2-2 2z" fill="#000"/><path d="M10 9h12M10 14h12M10 19h12" stroke="#fff" stroke-width="2.2"/></svg>',
+dest:'<svg viewBox="0 0 32 32"><path d="M6 15c0-5 4-8 9-8 2 0 3 .5 5 1l5-2-1 4c2 1 3 3 3 5v3l-2 1v4h-4v-2h-6v2H9v-4c-2-1-3-3-3-4z" fill="none" stroke="#000" stroke-width="2.6" stroke-linejoin="round"/><circle cx="21" cy="14" r="1.3" fill="#000"/></svg>',
+learn:'<svg viewBox="0 0 32 32"><path d="M16 8C12 5 7 5 3 7v18c4-2 9-2 13 1 4-3 9-3 13-1V7c-4-2-9-2-13 1zM16 8v18" fill="none" stroke="#000" stroke-width="2.6" stroke-linejoin="round"/></svg>',
+cart:'<svg viewBox="0 0 48 48"><path d="M4 8h7l6 22h22l4-16H14" fill="none" stroke="#000" stroke-width="3" stroke-linejoin="round"/><path d="M19 14l2 14M26 14v14M33 14l-2 14" stroke="#000" stroke-width="2"/><circle cx="19" cy="38" r="3.5" fill="none" stroke="#000" stroke-width="3"/><circle cx="35" cy="38" r="3.5" fill="none" stroke="#000" stroke-width="3"/></svg>',
+cam:'<svg viewBox="0 0 42 34"><path d="M3 9h8l3-5h14l3 5h8v22H3z" fill="#000"/><circle cx="21" cy="19" r="7" fill="#fff"/><circle cx="21" cy="19" r="4" fill="#000"/></svg>',
+chev:'<svg viewBox="0 0 24 24"><path d="M4 8l8 8 8-8" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+qr:'<svg viewBox="0 0 100 100"><g fill="#222"><path d="M5 5h28v28H5zM67 5h28v28H67zM5 67h28v28H5z"/></g><g fill="#adadad"><path d="M12 12h14v14H12zM74 12h14v14H74zM12 74h14v14H12z"/></g><g fill="#222"><rect x="40" y="8" width="10" height="10"/><rect x="40" y="40" width="12" height="12"/><rect x="58" y="44" width="10" height="10"/><rect x="40" y="62" width="10" height="10"/><rect x="62" y="68" width="12" height="12"/><rect x="80" y="62" width="14" height="10"/><rect x="44" y="82" width="14" height="12"/><rect x="78" y="82" width="16" height="12"/><rect x="8" y="42" width="14" height="10"/><rect x="26" y="40" width="8" height="8"/></g></svg>'
+};
+const TABS=[['scan','Escanear'],['nota','Nota'],['dest','Destino'],['learn','Aprenda']];
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+
+/* dados da nota */
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+const LOJAS=[['Supermercado Compre Bem','cart'],['Padaria Pão Quente','cart'],['Farmácia Vida','cart'],['Mercadinho do Bairro','cart']];
+function buildNota(chave,demo){
+  const h=hash(chave);const [nome,ic]=LOJAS[h%LOJAS.length];
+  const valor=demo?50:Math.round((12+(h%26800)/100)*100)/100;
+  const cnpj=chave.slice(6,20);
+  return {id:chave,chave,loja:demo?'Supermercado Compre Bem':nome,cnpj:cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5'),valor,ts:Date.now()};
+}
+function calc(n){
+  const icms=Math.round(n.valor*18)/100,pis=Math.round(n.valor*9)/100,tot=Math.round((icms+pis)*100)/100;
+  const sh=[36,25,20,19];let rest=tot;
+  const dest=sh.map((p,i)=>{const v=i<3?Math.round(tot*p)/100:Math.round(rest*100)/100;rest-=v;return {p,v}});
+  return {icms,pis,tot,liq:Math.round((n.valor-tot)*100)/100,dest};
+}
+function dataFmt(ts){const d=new Date(ts);return d.toLocaleDateString('pt-BR')+' - '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}
+function addNota(n){S.notas=[n,...S.notas.filter(x=>x.id!==n.id)].slice(0,20);store.set('pov_notas',S.notas);S.sel=n.id}
+
+/* telas */
+function notaItem(n){const c=calc(n);return `<button class="nota" data-id="${n.id}">${ICON.cart}<div class="t"><b>${esc(n.loja)}</b><span>${new Date(n.ts).toLocaleDateString('pt-BR')}</span></div><div class="v"><b>${brl(n.valor)}</b><span class="tag">27% Impostos</span></div></button>`}
+function vScan(){
+  return `<div class="card lime hello"><div class="c">${esc((S.user||'V')[0].toUpperCase())}</div><div>Olá, ${esc(S.user)}!<small>Escaneie uma nota e veja seus tributos</small></div></div>
+  <div class="card gray scan"><h2>Consulte os tributos da sua compra:</h2>
+  <div class="qr" id="qrbox">${ICON.qr}<video id="vid" playsinline muted hidden></video></div>
+  <button class="cam ${S.stream?'live':''}" id="cam" aria-label="Usar câmera">${ICON.cam}</button>
+  <div class="row"><input id="chave" inputmode="numeric" placeholder="Chave de acesso (44 dígitos)"><button id="buscar">Buscar</button></div>
+  <div class="hint" id="hint">${S.hint||'Cole a chave da NFC-e ou use a câmera. <a id="demo">Usar nota de exemplo</a>'}</div></div>
+  <h3>NOTAS RECENTES:</h3>${S.notas.length?S.notas.slice(0,4).map(notaItem).join(''):'<p class="empty">Nenhuma nota ainda. Escaneie a primeira!</p>'}`;
+}
+function vNota(){
+  const n=S.notas.find(x=>x.id===S.sel);
+  if(!n)return `<div class="card blue"><h2>Nenhuma nota selecionada</h2><p>Escaneie uma nota ou escolha uma abaixo.</p></div>${S.notas.map(notaItem).join('')}`;
+  const c=calc(n);
+  return `<div class="card lime top"><div><b>${esc(n.loja)}</b><br><span style="font-size:12px">CNPJ ${n.cnpj}<br>Data: ${dataFmt(n.ts)}</span></div><div class="r">Total Pago:<br><b>${brl(n.valor)}</b></div></div>
+  <div class="card gray"><h2>Divisão do Valor Pago</h2><div class="split"><div class="a" style="width:73%">73%</div><div class="b" style="width:27%">27%</div></div>
+  <div class="two"><div class="mini">Valor do Produto sem Tributos<b>${brl(c.liq)}</b></div><div class="mini b">Total em Tributos<b>${brl(c.tot)}</b></div></div></div>
+  <div class="card gray"><h2>Detalhamentos dos Tributos:</h2>
+  <div class="tr"><strong>ICMS</strong><span class="pill">Estadual</span><div class="m">${brl(c.icms)}<small>(18,0%)</small></div></div>
+  <div class="tr"><strong>PIS / COFINS</strong><span class="pill f">Federal</span><div class="m">${brl(c.pis)}<small>(9,0%)</small></div></div></div>
+  <button class="go" id="goDest"><span>Ver para onde esses ${brl(c.tot)} são destinados</span><b>›</b></button>
+  <p style="color:#fff;opacity:.6;font-size:11px;margin-top:14px">Valores estimados com alíquotas médias (ICMS 18% e PIS/COFINS 9%) para fins educativos.</p>`;
+}
+const DESC=[['Saúde Pública:','Vacinas, consultas no posto de saúde, medicamentos básicos e manutenção dos hospitais públicos.'],['Educação pública:','Merenda escolar, material didático e salários de professores de creches e escolas públicas.'],['Infraestrutura urbana','Iluminação da rua, pavimentação, limpeza urbana e transporte público.'],['Segurança e outros','Policiamento comunitário, bombeiros, praças e serviços administrativos.']];
+function vDest(){
+  const n=S.notas.find(x=>x.id===S.sel);
+  if(!n)return `<div class="card blue"><h2>Escolha uma nota</h2><p>Para ver o destino dos tributos, selecione uma nota fiscal.</p></div>${S.notas.map(notaItem).join('')||'<p class="empty">Escaneie uma nota na aba Escanear.</p>'}`;
+  const c=calc(n);
+  return `<div class="card lime"><h2 style="margin-bottom:6px">Para onde vai o seu dinheiro?</h2><p>Seus ${brl(c.tot)} em tributos desta compra são investidos assim:</p></div>
+  <div class="card gray" style="padding:22px 18px 10px"><h2 style="padding-left:6px">Destino dos tributos:</h2>
+  ${DESC.map((d,i)=>`<div class="dest"><div class="h"><strong>${d[0]}</strong><span class="pill">${brl(c.dest[i].v)} (${c.dest[i].p}%)</span></div><p>${d[1]}</p><div class="kb"><i style="width:0" data-w="${c.dest[i].p*2}%"></i></div></div>`).join('')}</div>
+  <div class="card blue"><h2 style="margin-bottom:6px">Você sabia?</h2><p style="font-size:14px;line-height:1.4">No Brasil, a maior arrecadação vem do consumo diário (embutido nos produtos) e não do Imposto de Renda. Por isso, quem ganha menos paga proporcionalmente mais.</p></div>
+  <p style="color:#fff;opacity:.6;font-size:11px">Distribuição ilustrativa por área, não representa o orçamento oficial de um ente específico.</p>`;
+}
+const FAQ=[['Não declaro Imposto de Renda. Mesmo assim pago imposto?','Sim. Impostos sobre consumo como ICMS e PIS/COFINS já vêm embutidos no preço de quase tudo que você compra, então todo mundo que consome paga, mesmo sem declarar Imposto de Renda.'],['Por que pedir CPF na Nota Fiscal é importante?','O CPF vincula a compra a você. Isso ajuda a comprovar a compra, garantir direitos de troca e garantia, e em vários estados gera créditos e sorteios dos programas de incentivo. Também ajuda o fisco a combater a sonegação.'],['O que são ICMS, PIS/COFINS e IPI?','ICMS é o imposto estadual sobre circulação de mercadorias e serviços. PIS e COFINS são contribuições federais que incidem sobre a receita das empresas. IPI é o imposto federal sobre produtos industrializados, cobrado da indústria e repassado ao preço final.']];
+function vLearn(){
+  return `<div class="card blue" style="border-radius:30px"><h2 style="margin-bottom:6px">Educação Fiscal Simplificada</h2><p style="font-size:15px;line-height:1.35">Tudo explicado em linguagem cotidiana, sem termos difíceis ou burocráticas.</p></div>
+  <div class="card lime big" style="border-radius:34px;padding:26px 24px"><h2>COMO FUNCIONA A ARRECADAÇÃO</h2><p>Quando você compra um produto, a loja já inclui no preço final os impostos municipais, estaduais e federais. O comerciante recolhe esse valor e repassa aos cofres públicos para financiar serviços essenciais.</p></div>
+  <h3 style="margin-top:34px">Perguntas Frequentes (FAQ)</h3>
+  ${FAQ.map((f,i)=>`<div class="faq ${S.faq===i?'open':''}"><button data-q="${i}"><span>${f[0]}</span>${ICON.chev}</button><div class="ans">${f[1]}</div></div>`).join('')}`;
+}
+function render(){
+  $('#login').style.display=S.user?'none':'flex';
+  $('#hn').textContent=S.user||'Visitante';
+  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-t="${k}" class="${S.tab===k?'on':''}">${ICON[k==='scan'?'scan':k]}${l}</button>`).join('');
+  if(!S.user){return}
+  $('#main').innerHTML={scan:vScan,nota:vNota,dest:vDest,learn:vLearn}[S.tab]();
+  $('#main').scrollTop=0;
+  requestAnimationFrame(()=>document.querySelectorAll('.kb i').forEach(i=>i.style.width=i.dataset.w));
+  if(S.tab==='scan'&&S.stream){const v=$('#vid');v.hidden=false;v.srcObject=S.stream;v.play().catch(()=>{});$('#qrbox svg').style.display='none'}
+}
+function go(t){if(t!=='scan')stopCam();S.tab=t;S.hint='';render()}
+
+/* câmera + leitura */
+let timer=null;
+function stopCam(){clearInterval(timer);if(S.stream){S.stream.getTracks().forEach(t=>t.stop());S.stream=null}}
+function extrairChave(txt){const m=String(txt).replace(/\D/g,' ').match(/\d{44}/);return m?m[0]:null}
+function aceitar(chave,demo){
+  if(!/^\d{44}$/.test(chave)){S.hint='A chave precisa ter 44 números.';render();return}
+  stopCam();addNota(buildNota(chave,demo));S.tab='nota';render();
+}
+async function toggleCam(){
+  if(S.stream){stopCam();render();return}
+  try{
+    S.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    S.hint='Aponte para o QR Code da nota…';render();
+    if('BarcodeDetector' in window){
+      const bd=new BarcodeDetector({formats:['qr_code']});
+      timer=setInterval(async()=>{try{const r=await bd.detect($('#vid'));if(r.length){const c=extrairChave(r[0].rawValue);if(c)aceitar(c);else toast('QR lido, mas não parece uma NFC-e')}}catch(e){}},500);
+    }else{S.hint='Câmera ativa, mas este navegador não lê QR. Digite a chave abaixo.';render()}
+  }catch(e){S.stream=null;S.hint='Não foi possível abrir a câmera. Digite a chave de acesso.';render()}
+}
+
+/* eventos */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-t]');if(t)return go(t.dataset.t);
+  const nt=e.target.closest('.nota');if(nt){S.sel=nt.dataset.id;return go('nota')}
+  const q=e.target.closest('[data-q]');if(q){S.faq=S.faq===+q.dataset.q?-1:+q.dataset.q;const y=$('#main').scrollTop;render();$('#main').scrollTop=y;return}
+  const id=e.target.id;
+  if(id==='goDest')go('dest');
+  else if(id==='cam'||e.target.closest('#cam'))toggleCam();
+  else if(id==='buscar')aceitar(($('#chave').value||'').replace(/\D/g,''));
+  else if(id==='demo'){const k='35261100000000000000650010000000011000000019';aceitar(k,true)}
+  else if(id==='sair'){stopCam();S.user=null;store.set('pov_user',null);S.tab='scan';render()}
+  else if(id==='entrar')entrar();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'){if(!S.user)entrar();else if(e.target.id==='chave')aceitar(e.target.value.replace(/\D/g,''))}});
+function entrar(){
+  const l=$('#lg').value.trim(),s=$('#sn').value;
+  if(!l||!s){$('#err').textContent='Preencha login e senha.';return}
+  if(s.length<4){$('#err').textContent='A senha precisa ter ao menos 4 caracteres.';return}
+  $('#err').textContent='';S.user=l;store.set('pov_user',l);$('#sn').value='';render();
+}
+/* olhos seguem o dedo/cursor */
+document.addEventListener('pointermove',e=>{
+  document.querySelectorAll('.eye i').forEach(i=>{const r=i.parentElement.getBoundingClientRect();const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);const d=Math.hypot(dx,dy)||1,k=Math.min(14,d/10);i.style.transform=`translate(${dx/d*k}px,${dy/d*k}px)`});
+});
+render();
+</script>
+</body>
+</html>
